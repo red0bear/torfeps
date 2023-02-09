@@ -323,6 +323,9 @@ init_geoip_countries(void)
 int
 geoip_load_file(sa_family_t family, const char *filename, int severity)
 {
+  #ifdef DISABLE_GEOIP
+  	return -1;
+  #else
   FILE *f;
   crypto_digest_t *geoip_digest_env = NULL;
 
@@ -379,6 +382,7 @@ geoip_load_file(sa_family_t family, const char *filename, int severity)
   crypto_digest_free(geoip_digest_env);
 
   return 0;
+  #endif
 }
 
 /** Given an IP address in host order, return a number representing the
