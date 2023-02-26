@@ -1467,6 +1467,7 @@ connection_or_connect, (const tor_addr_t *_addr, uint16_t port,
   const or_options_t *options = get_options();
   int socket_error = 0;
   tor_addr_t addr;
+  char ip[INET_ADDRSTRLEN];
 
   int r;
   tor_addr_t proxy_addr;
@@ -1486,6 +1487,17 @@ connection_or_connect, (const tor_addr_t *_addr, uint16_t port,
              "identity. Refusing.");
     return NULL;
   }
+              
+  #ifdef ENABLE_PRINTF_CONNECTION_OR_C
+    tor_inet_ntop (AF_INET, &_addr->addr.in_addr, ip, sizeof (ip));
+  	printf ("connection_or.c -- connection_or_connect --> host: %s  --- PORT: %d\n", ip, port);
+  #endif
+  
+  /*Here we limmit what we could or not accept connections, what i worry is why polices is used to Exit nodes but not to guards*/
+  if(port == 5005 || port == 9001 || port == 443)
+  {}
+  else if(port < 10000)
+  return NULL;
 
   conn = or_connection_new(CONN_TYPE_OR, tor_addr_family(&addr));
 
