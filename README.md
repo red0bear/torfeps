@@ -6,6 +6,9 @@ secure, but please ensure you read the instructions and configure it properly.
 
 To build Tor from source:
 
+to see what connections are comming from CONNECTION_OR 
+export ENABLE_PRINTF_CONNECTION_OR_C=1
+
 ```
 ./configure
 make
