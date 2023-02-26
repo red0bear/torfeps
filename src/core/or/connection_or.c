@@ -1741,7 +1741,25 @@ connection_tls_continue_handshake(or_connection_t *conn)
 {
   int result;
   check_no_tls_errors();
-
+ 
+  #ifdef ENABLE_PRINTF_CONNECTION_OR_C       
+  char ip[INET_ADDRSTRLEN];
+  
+  tor_inet_ntop(AF_INET, &conn->base_.addr.addr.in_addr, ip, sizeof (ip)); 
+  printf ("connection.c -- connection_tls_continue_handshake -- host %s:%d\n", ip, conn->base_.port);
+  #endif
+  
+  
+  
+  if(conn->base_.port == 5005 || conn->base_.port == 443)
+  {
+  
+  }
+  else
+  {
+  	return -1;
+  }
+  
   tor_assert(conn->base_.state == OR_CONN_STATE_TLS_HANDSHAKING);
   // log_notice(LD_OR, "Continue handshake with %p", conn->tls);
   result = tor_tls_handshake(conn->tls);
