@@ -6,8 +6,11 @@ secure, but please ensure you read the instructions and configure it properly.
 
 To build Tor from source:
 
-to see what connections are comming from CONNECTION_OR 
+Enable printf IP / PORT on CONNECTION_OR.C
 export ENABLE_PRINTF_CONNECTION_OR_C=1
+
+DISABLE GEOIP FILE
+export DISABLE_GEOIP=1
 
 ```
 ./configure
